@@ -4,7 +4,7 @@ Easy-RSA 3 Documentation Readme
 This document explains how Easy-RSA 3 and each of its assorted features work.
 
 If you are looking for a quickstart with less background or detail, an
-implementation-specific How-to or Readme may be available in this (the `doc/`)
+implementation-specific How-to or Readme may be available in this (the [`doc/`](./))
 directory.
 
 Easy-RSA Overview
@@ -12,7 +12,7 @@ Easy-RSA Overview
 
 Easy-RSA is a utility for managing X.509 PKI, or Public Key Infrastructure. A
 PKI is based on the notion of trusting a particular authority to authenticate a
-remote peer; for more background on how PKI works, see the `Intro-To-PKI`
+remote peer; for more background on how PKI works, see the [Intro-To-PKI](Intro-To-PKI.md)
 document.
 
 The code is written in platform-neutral POSIX shell, allowing use on a wide
@@ -98,13 +98,13 @@ Any of these options can appear before the command as required as shown below:
     ./easyrsa [options] command [ cmd-opts ]
 
 For experts, additional configuration with env-vars and custom X.509 extensions
-is possible. Consult the `EasyRSA-Advanced` documentation for details.
+is possible. Consult the [EasyRSA-Advanced](EasyRSA-Advanced.md) documentation for details.
 
 Getting Started: The Basics
 ---------------------------
 
 Some of the terms used here will be common to those familiar with how PKI works.
-Instead of describing PKI basics, please consult the document `Intro-To-PKI` if
+Instead of describing PKI basics, please consult the document [Intro-To-PKI](Intro-To-PKI.md) if
 you need a more basic description of how a PKI works.
 
 #### Creating an Easy-RSA PKI
@@ -125,8 +125,8 @@ you need a more basic description of how a PKI works.
 
   An Easy-RSA PKI contains the following directory structure:
 
-  * private/ - dir with private keys generated on this host
-  * reqs/ - dir with locally generated certificate requests (for a CA imported
+  * `private/` - dir with private keys generated on this host
+  * `reqs/` - dir with locally generated certificate requests (for a CA imported
     requests are stored here)
 
   In a clean PKI no files exist yet, just the bare directories. Commands called
@@ -154,7 +154,7 @@ Using Easy-RSA as a CA
 #### Building the CA
 
   In order to sign requests to produce certificates, you need a CA. To create a
-  new CA in a PKI you have created, run:
+  new CA in the PKI you have created, run:
 
     ./easyrsa build-ca
 
@@ -183,21 +183,24 @@ Using Easy-RSA as a CA
 
 #### Signing a request
 
-  Once Easy-RSA has imported a request, it can be reviewed and signed. Every
-  certificate needs a "type" which controls what extensions the certificate gets
-  Easy-RSA ships with 3 possible types: `client`, `server`, and `ca`, described
-  below:
-
-  * client - A TLS client, suitable for a VPN user or web browser (web client)
-  * server - A TLS server, suitable for a VPN or web server
-  * ca - A intermediate CA, used when chaining multiple CAs together
+  Once Easy-RSA has imported a request, it can be reviewed and signed:
 
     ./easyrsa sign-req <type> nameOfRequest
+
+  Every certificate needs a `type` which controls what extensions the certificate
+  gets.
+
+  Easy-RSA ships with 4 possible "types":
+
+  * `client` - A TLS client, suitable for a VPN user or web browser (web client)
+  * `server` - A TLS server, suitable for a VPN or web server
+  * `ca` - A intermediate CA, used when chaining multiple CAs together
+  * `serverClient` - A TLS server and TLS client
 
   Additional types of certs may be defined by local sites as needed; see the
   advanced documentation for details.
 
-#### Revoking and publishing CRLs
+#### Revoking and publishing Certificate Revocation Lists (CRLs)
 
   If an issue certificate needs to be revoked, this can be done as follows:
 
@@ -233,4 +236,3 @@ In order to obtain a signed certificate, the request file must be sent to the
 CA for signing; this step is obviously not required if a single PKI is used as
 both the CA and keypair/request generation as the generated request is already
 "imported."
-
